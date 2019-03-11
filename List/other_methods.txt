@@ -1,0 +1,86 @@
+# Other common list methods
+
+reverse reverses the list in-place
+extend and pop methods insert multiple items at and delete an item from the end of the list, respectively.
+
+reversed built-in function that works much like "sorted" and returns a new result object, but it must be wrapped in a "list" call.
+
+>>> l = [1, 2]
+>>> l.extend([3, 4, 5])
+>>> l
+[1, 2, 3, 4, 5]
+>>> l.pop()
+5
+>>> l
+[1, 2, 3, 4]
+>>> l.reverse()
+>>> l
+[4, 3, 2, 1]
+>>> list(reversed(l))
+[1, 2, 3, 4]
+
+append() and pop() as stack
+
+>>> l = []
+>>> l.append(1)
+>>> l.append(2)
+>>> l
+[1, 2]
+>>> l.pop()
+2
+>>> l
+[1]
+
+The pop() method also accepts an optional offset of the item to be deleted and returned. the default offset is -1.
+
+remove(value)
+insert(i, value)
+index(value) # search for an item's offset
+count(value) # count the number of occurrences
+
+>>> l = ['spam', 'eggs', 'ham']
+>>> l.index('eggs')
+1
+>>> l.insert(1, 'toast')
+>>> l
+['spam', 'toast', 'eggs', 'ham']
+>>> l.remove('eggs')
+>>> l
+['spam', 'toast', 'ham']
+>>> l.pop(1)
+'toast'
+>>> l
+['spam', 'ham']
+>>> l.count('spam')
+1
+
+count and index methods
+
+Other common list operations
+Because lists are mutable, you can use the del statement to delete an item or section in place:
+
+>>> l = ['spam', 'eggs', 'ham', 'toast']
+>>> del l[0]
+>>> l
+['eggs', 'ham', 'toast']
+>>> del l[1:]
+>>> l
+['eggs']
+
+You can also delete a section of a list by assigning an empty list to a slice(l[i:j] = [])
+
+>>> l = ['already', 'got', 'one']
+>>> l[:] = []
+>>> l
+[]
+
+>>> l = ['already', 'got', 'one']
+>>> l[1:] = []
+>>> l
+['already']
+>>> l[0] = []
+>>> l
+[[]]
+
+l.copy() method a top-level copy of the list, much like l[:] and list(l). 
+

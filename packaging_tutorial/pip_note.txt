@@ -1,0 +1,130 @@
+An Overview of Packaging For Python
+  The importance of packaging
+  pip, setuptools, wheel, twine, PyPI
+  python>=python3.4 for pip
+  python >= python3.3 for venv
+
+$ python3 --version
+$ python3 -m venv pip_tutorial
+$ which python3 or where py
+
+$ python3 -m pip install --upgrade pip
+
+# PIP
+Pip is the package installer for Python; Python Package Index and Others.
+(easy_install before)
+
+$ pip install package-name; $ pip${version} install package-name
+$ pip uninstall package-name
+
+$ pip install --index-url https://test.pypi.org/simple/ package
+
+$ pip install package-name==1.4
+$ pip install package-name>=1.4,<2
+$ pip install package-name~=1.4
+
+$ pip install -r requirements.txt
+  try requirements-demo.txt
+
+# Project&Package: setuptools and wheel modules to create a distribution
+Project: A library, framework, script, plugin, application, or collection of data or other resources, or some combination thereof that is intended to be packaged into a Distribution.
+
+package: 1. a bundle of softwares(distribution) 2. source code
+* a way to share your code and ship to other people
+
+Setuptools is a package development process library designed to facilitatepackaging Python projects by enhancing the Python Standard Library "disutils".
+
+*Use setuptools to define projects and create Source Distribution.
+it includes:
+- Python package and module definitions
+- Distribution package metadata
+- Test hooks
+- Project installation
+- Platform-specific details
+
+Wheel is a setuptools extension for building wheels that provides the "bdist_wheel" setuptools command and a command line tool for working with wheel files.
+
+Wheels are a pre-built distribution format that provides faster installation compared to source distributions (sdist), especially when a project contains compiled extensions.
+
+If pip does not find a wheel to install, it will locally build a wheel and cache it for future installs, instead of rebuilding the source distribution in the future.
+
+Python Wheels have replace Eggs: a way of bundling python projects
+https://github.com/pypa/setuptools/blob/master/setuptools/wheel.py
+
+$ pip install setuptools wheel
+
+# A Simple Project Demo with setuptools and wheel
+setup.py is the build script for setuptools
+
+/packaging_tutorial
+  setup.py
+  /example_pkg
+    __init__.py
+  LICENSE
+  README.md
+
+__init__.py:
+name = "example_pkg"
+print("This is my first package")
+
+import setuptools
+
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
+setuptools.setup(
+    # name will be used in PyPI
+    name="example-pkg-your-username",
+    version="0.0.1",
+    author="Example Author",
+    author_email="author@example.com",
+    description="A small example package",
+    # long_description will be used in PyPI
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url="https://github.com/pypa/sampleproject",
+    #install_requires=["pandas", "numpy>=1.0"]
+    packages=setuptools.find_packages(),
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
+)
+
+packages is a list of all Python import packages that should be included in the distribution package.
+
+classifiers list: https://pypi.org/classifiers/
+License https://choosealicense.com/
+
+* We can do two things with setup.py
+1.Source distribution -> create .tar.gz in dist by python3 setup.py sdist
+2.Whl distribution -> create .whl in dist by python3 setup.py bdist_wheel
+
+dist/
+  example.tar.gz
+  example.whl
+
+The tar.gz file is a source archive whereas the .whl file is a built-distribution. Newer pip versions preferentially install built distributions, but will fall back to source archives if needed.
+
+# Review What is a Project
++ practical way to define a project: it contains a setup.py
+$ python3 setup.py sdist bdist_wheel
+
+# Test PyPI Account
+Not going to use python setup.py upload
+
+$ python3 -m pip install --upgrade twine
+$ python3 -m twine upload --repository-url https://test.pypi.org/legacy dist/*
+
+# Install your Package
+$ python3 -m pip install --index-url https://test.pypi.org/simple package
+
+# Github and TravisCI
+
+References:
+https://packaging.python.org/overview/
+https://setuptools.readthedocs.io/en/latest/setuptools.html
+https://github.com/pandas-dev/pandas
+https://pypi.org/classifiers/
+https://choosealicense.com/

@@ -1,0 +1,174 @@
+# Lists in Action
+
+>>> len([1,2,3])
+3
+>>> [1,2,3] + [4, 5, 6]
+[1, 2, 3, 4, 5, 6]
+>>> ['Ni!'] * 4
+['Ni!', 'Ni!', 'Ni!', 'Ni!']
+
++ operator expects the same sort of sequence on both sides
+
+>>> str([1, 2]) + '34'
+'[1, 2]34'
+>>> [1, 2] + list('34')
+[1, 2, '3', '4']
+
+# List Iteration and Comprehensions
+>>> 3 in [1, 2, 3]
+True
+>>> for x in [1, 2, 3]:
+...     print(x, end=' ')
+...
+1 2 3
+
+list comprehensions are a way to build a new list by applying an expression to each item in a sequence (really, in any iterable), and are close relative to for loops:
+
+>>> res = [c * 4 for c in 'SPAM']
+>>> res
+['SSSS', 'PPPP', 'AAAA', 'MMMM']
+
+>>> for c in 'SPAM':
+...     res.append(c *4)
+...
+>>> res
+['SSSS', 'PPPP', 'AAAA', 'MMMM']
+
+the "map" built-in function does similar work, but applies a function to items in a sequnece and collects all the results in a new list:
+
+>>> list(map(abs, [-1, -2, 0, 1, 2]))
+[1, 2, 0, 1, 2]
+
+and dictionary comprehension
+
+# Indexing, Slicing, and Matrixes
+slicing a list always returns a new list
+
+>>> l = ['spam', 'Spam', 'SPAM!']
+>>> l[2]
+'SPAM!'
+>>> l[-2]
+'Spam'
+>>> l[1:]
+['Spam', 'SPAM!']
+
+Matrix
+>>> matrix = [[1,2,3], [4,5,6], [7, 8, 9]]
+>>> matrix[1]
+[4, 5, 6]
+>>> matrix[1][1]
+5
+>>> matrix = [[1, 2, 3],
+...           [4, 5, 6],
+...           [7, 8, 9]]
+>>> matrix[1][1]
+5
+
+matrix[row][col]
+*With one index, you can get an entire row(really, a nested sublist), and with two, you get an item within the row.
+
+the "..."s here are Python's continuation line prompt (see Chapter 4 for comparable code without the "..."s, and watch for more on syntax in the next part of the book)
+
+For more on matrixes, watch later in this chapter for a dictionary-based matrix representation, which can be more efficient when matrixes are largely empty.
+
+# Changing Lists in Place
+>>> l = ['spam', 'Spam', 'SPAM!']
+>>> l[1] = 'eggs'
+>>> l
+['spam', 'eggs', 'SPAM!']
+>>> l[0:2] = ['eat', 'more']
+>>> l
+['eat', 'more', 'SPAM!']
+
+Both index and slice assignment are in-place changes--they modify the subject list directly, rather than generating a new list object for the result.
+
+Index assignment in Python works much as it does in C and most other languages: Python replaces the single object reference at the designated offset with a new one.
+
+Slice Assignment:
+  1. Deletion: The slice you specify to the left of the = is deleted
+  2. Insertion: The new items contained in the iterable object to the right of the = are inserted into the list on the left, at the place where the old slice was deleted.
+
+This isn't what really happens, but it can help clarify.
+
+>>> l = [1, 2, 3]
+>>> l[1:2] = [4, 5]
+>>> l
+[1, 4, 5, 3]
+>>> l[1:1] = [6, 7]
+>>> l
+[1, 6, 7, 4, 5, 3]
+>>> l[1:2] = []
+>>> l
+[1, 7, 4, 5, 3]
+
+Because the length of the sequence being assigned does not have to match the length of the slice being assigned to, slice assignment can be used to replace, expand, or shrink the subject list. It's a powerful operation, but one that you may not see very often in practice.
+
+*mnemonically
+
+list slice assignment can be used as in-place concatenation at the front or end of the list like extend
+
+>>> l = [1]
+>>> l[:0] = [2,3,4]
+>>> l
+[2, 3, 4, 1]
+>>> l[len(l):] = [5, 6, 7]
+>>> l.extend([8,9,10])
+>>> l
+[2, 3, 4, 1, 5, 6, 7, 8, 9, 10]
+
+# List Method Calls
+>>> l = ['eat', 'more', 'SPAM!']
+>>> l.append('please')
+>>> l
+['eat', 'more', 'SPAM!', 'please']
+>>> l.sort()
+>>> l
+['SPAM!', 'eat', 'more', 'please']
+
+* append and sort in place
+* 'S'< 'e'
+
+append(x) expects you to pass in a single object, not a list.
+The effect of l.append(x) is similar to l + [x]
+
+but while the former changes l in place, the latter makes a new list.
+Unlike + concatenation, append() doesn't have to generate new objects,
+so it's usually faster than + too. append(x) = l[len(l):] = [x] = l.insert(len(l), x)
+
+l.insert(0, x) = l[:0] = [x]
+
+# Sorting list
+sort orders a list in place. ascending
+
+reverse=True argument
+>>> l = ['abc', 'ABD', 'aBe']
+>>> l.sort()
+>>> l
+['ABD', 'aBe', 'abc']
+
+>>> l = ['abc', 'ABD', 'aBe']
+>>> l.sort(key=str.lower)
+>>> l
+['abc', 'ABD', 'aBe']
+
+>>> l = ['abc', 'ABD', 'aBe']
+>>> l.sort(key=str.lower, reverse=True)
+>>> l
+['aBe', 'ABD', 'abc']
+
+The sort "key" argument might also be useful when sorting lists of dictionaries, to pick out a sort key by indexing each dictionary.
+
+One waring here: beware that append and sort change the associated list ojbect in place, but don't return the list as a result(But return None)
+L = L.append() # you will lose the reference
+
+Partly because of such constraints, sorting is also available in recent Pythons as a built-in function, which sorts any collection (not just lists) and returns a new list for the result
+
+>>> l = ['abc', 'ABD' , 'aBe']
+>>> sorted(l, key=str.lower, reverse=True)
+['aBe', 'ABD', 'abc']
+
+>>> l = ['abc', 'ABD' , 'aBe']
+>>> sorted([x.lower() for x in l], reverse=True)
+['abe', 'abd', 'abc']
+
+we'll see contexts in which the "sorted" built-in can sometimes be more useful than the sort method.

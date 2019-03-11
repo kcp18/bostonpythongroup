@@ -1,0 +1,70 @@
+List and Dictionary: collections of other objects.
+they can be changed in place, can grow and shrink on demand and may contain and be nested in any other kind of object.
+
+Lists: built-in object
+a flexible ordered collection object type.
+
+lists can contain any sort of object: numbers, strings, even other lists.
+
+lists may be changed in place by assignment to offsets and slices, list method calls, deletion statements, and more.
+
+They are mutable objects.
+
+Python Lists are:
+  - Ordered collections of arbitrary objects
+  - Accessed by offset(index, slice, and concatenation)
+  - Variable-length, heterogeneous, and arbitrarily nestable
+    (unlike string, lists can grow and shrink in place)
+  - Of the category "mutable sequence" 
+    (it means it can be changed in place and sequence operation + more)
+  - Array of object references
+    (lists really are arrays inside the standard Python interpreter,
+     not linked structures. Python always follows a reference to an objectwhenever the reference is used, so your program deals only with objects.)
+
+# Common List Literals and operations
+l = []
+l = [123, 'abc', 1.23, {}]
+l = ['bob', 40.0, ['dev', 'mgr']]
+l = list('spam')
+l = list(range(-4, 4))
+
+l[i]
+l[i][j]
+l[i:j]
+len(l)
+
+l1 + l2
+l * 3
+
+for x in l: print(x)
+3 in l
+
+l.append(4)
+l.extend([5, 6, 7])
+l.insert(i, x)
+
+l.index(x)  # methods: searching return index position of a value
+l.count(x)
+
+l.sort()
+l.reverse()
+l.copy()
+l.clear()
+
+l.pop([i])  # methods, statements: shrinking
+l.remove(x) # search and remove a value
+
+del l[i]
+del l[i:j]
+l[i:j] = []
+
+l[i] = 3
+l[i:j] = [4, 5, 6] # slice assignment
+
+l = [x**2 for x in range(5)] # List comprehensions and maps
+list(map(ord, 'spam'))
+
+List also respond to list-specific method calls(which provide utilities such as sorting, reversing, adding items to the end, etc), as well as in-place change operations (deleting items, assignment to indexes and slices, and so forth). Lists have these tools for change operations because they are a mutable object type.
+
+*In practice, you won't see many lists written out like this in list-processing programs. It's more common to see code that processes lists constructed dynamically (at runtime), from user inputs, file contents, and so on. In fact, although it's important to master literal syntax, many data structures in Python are built by running program code at runtime.
+

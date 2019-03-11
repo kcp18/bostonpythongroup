@@ -1,0 +1,74 @@
+# Python Expression Operators
+The most fundamental tool that processes numbers is the "expressions":a combination of numbers (or other objects) and operators that computes a value when executed by Python.
+
+In Python you write expressions using the usual mathematical notation and operator symbols.
+
+% computes a division remainder, << performs a bitwise left-shift, & computes a bitwise AND result, and so on.
+
+is operator tests object identity(address in memory, a strict form of equality)
+
+lambda creates unnamed functions.
+
+Table Python expression operators and precedence
+
+yield x				Generator function "send" protocol
+lambda args: expression		Anonymous function generation
+x if y else z			Ternary selection
+x or y 				Logicial OR(y is evaluated only if x is false)
+x and y				Logical AND(y is evaluated only if x is true)
+not x				Logical negation
+
+x in y, x not in y		Membership
+x is y, x is not y		Object identity tests
+x < y, x <= y, x > y, x >= y	Magnitude comparison, set subset and superset;
+x == y, x != y 			value equality operators
+
+x | y				Bitwise OR, set union
+x ^ y 				Bitwise XOR, set symmetric difference
+x & y 				Bitwise AND, set intersection
+x << y, x >> y 			Shift x left or right by y bits
+
+x + y 				Addition, concatenation
+x - y 				Subtraction, set difference
+
+x * y 				Multiplication, repetition
+x % y 				Remainder, format;
+x / y, x // y 			Division: true and floor
+
+-x, +x 				Negation, identity
+~x 				Bitwise Not (inversion)
+x ** y 				Power (exponentiation)
+x[i] 				Indexing(sequence, mapping, others)
+x[i:j:k]			Slicing
+
+x(...)				Call(function, method, class, other callable)
+x.attr				Attribute reference
+(...)				Tuple, expression, generator expression
+[...]				List, list comprehension
+{...}				Dictionary, set, set and dictionary comprehensions
+
+Comparison operators may be chained
+
+* Operator Precedence: When you write an expression with more than one operator, Python groups its parts according to what are called "precedence rules", and this grouping determines the order in which the expression's parts are computed.
+
+* Parentheses group subexpressions
+When you enclose subexpressions in parentheses, you override Python's precedence rules; Python always evaluates expressions in parentheses first before using their results in the enclosing expressions.
+
+Generally speaeking, adding parentheses in large expressions is a good idea--it not only forces the evaluation order you want, but also aids readability.
+
+* Mixed types are converted up
+mix numeric types.
+
+40 + 3.14
+
+in mixed-type numeric expressions, Python first converts operands up to the type of the most complicated operand, and then performs the math on same-type operands. This behavior is similar to type conversions in the C language.
+
+>>> int(3.1415) # Truncates float to integer
+3
+>>> float(3) # Converts integer to float
+3.0
+
+In Python3, nonnumberic mixed-type magnitude comparisons are never allowed and raise exceptions.
+
+# Preview: Operator overloading and polymorphism
+all Python operators may be overloaded (i.e., implemented) by Python classes and C extension types to work on objects you create. x + y or x[i] expressions. This property is usually called "polymorphism" a term indicating that the meaning of an operation depends on the type of the objects being operated on.

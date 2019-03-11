@@ -1,0 +1,160 @@
+In Python3, str for Unicode(including ASCII)
+          , bytes for binary data(including encoded text)
+          , bytearray is a mutable variant of bytes
+
+Files for text which represents content as str and Unicode.
+Files for binary which deals in raw bytes and no data translation.
+
+# String Basics
+strings can be used to represent just about anything that can be 
+encoded as text or bytes. This includes symbols and contents of text files
+
+* String for raw bytes used for media files and network transfers.
+* immutable sequences
+* first in sequence class
+
+string, list, tuple
+
+# String Literals and Operations
+* expression operations such as concatenation, slicing, indexing, and .
+* also it provides string method for more advanced text-processing tasks
+
+S = 's\np\ta\x00m' Escape sequence
+S = r'C:\temp\spam' Raw strings(no escapes)
+B = b'sp\xc4m' Byte strings
+U = u'sp\u00c4m' Unicode
+
+Concatenation
+  s1 + s2
+  s * 3
+
+Indexing
+  s[i]
+  s[i:j]
+
+String Format
+  "a %s parrot" % kind
+  "a {0} parrot".format(kind)
+
+String method
+  s.find('pa')
+  s.rstrip() # remove whitespace
+  s.replace('pa', 'xx')
+  s.split(',') # split on delimiter
+  s.isdigit()  # content test
+  s.lower()  # case conversion
+  s.endswith('spam')  # end test
+  ','.join(strlist)  # delimiter join
+  s.encode('latin-1)  # Unicode encoding
+  s.decode(utf8')  # Unicode decoding
+  for x in S: print(x) # Iteration
+  'spam' in S  # Membership
+  [c * 2 for c in S]
+  map(ord, S) # ?
+  re.match('sp(.*)am', line) # Pattern matching: library module
+
+For the future, XML Parsers
+
+>>> 'shrubbery', "shrubbery"
+('shrubbery', 'shrubbery')
+
+>>> title = "Meaning " 'of' " Life"
+>>> title
+'Meaning of Life'
+
+>>> 'knight\'s', "knight\"s"
+("knight's", 'knight"s')
+embed quote characters by escaping them with backslashes.
+
+# Escape Sequence
+backslashes are used to introduce special character coding known as
+"escape sequences"
+
+The characer \, and one or more characters following it in the string 
+literal, are replaced with a single character in the resulting 
+string object, which has the binary value specified by the escape 
+sequence.
+
+>>> s ='a\nb\tc'
+>>> s
+'a\nb\tc'
+>>> print(s)
+a
+b	c
+>>> len(s)
+5
+
+\n and \t are considered as a character 
+
+This string is five characters long: it contains an ASCII a, a newline 
+character, an ASCII b, and so on.
+
+Byte has no meaning in Unicode World
+
+Under UTF-16, ASCII characters are multiple bytes in files, and 
+they may be 1, 2, or 4 bytes in memory depending on how Python 
+allocates their space.
+
+In Python3, str strings formally as "sequences of Unicode code points", 
+not bytes, to make this clear. Think characters insted of bytes.
+
+# Binary Character
+\0 : Null:binary 0 character (doesn't end string)
+
+>>> s ='a\nb\tc'
+>>> s
+'a\nb\tc'
+>>> print(s)
+a
+b	c
+>>> len(s)
+5
+>>> s = 'a\0b\0c'
+>>> s
+'a\x00b\x00c'
+>>> len(s)
+5
+>>> print(s)
+abc
+
+>>> s = '\001\002\x03'
+>>> s
+'\x01\x02\x03'
+>>> print(s)
+
+>>> s = "s\tp\na\x00m"
+>>> s
+'s\tp\na\x00m'
+>>> len(s)
+7
+>>> print(s)
+s	p
+am
+>>> 
+Notice that Python displays nonprintable characters in hex, regardless 
+how they were specified.
+You can freely combine absolute value escape and the more symbolic 
+escape types. 
+
+The above string contains the character "spam", a tab and newline, 
+and an absolute zero value character coded in hex.
+
+This becomes more important to know when you process binary data files
+in Python.
+
+* Because their contents are represented as strings in your scripts, 
+it's OK to process binary files that contain any sorts of binary byte 
+values--when opend in binary modes, files return strings of raw bytes
+from the external file.
+
+if Python does not recognize the character after a \ as being a valid 
+escape code, it simply keeps the backslash in the resulting string
+>>> x = "C:\py\code"
+>>> x
+'C:\\py\\code'
+>>> len(x)
+10
+>>> print(x)
+C:\py\code
+
+To be continued...

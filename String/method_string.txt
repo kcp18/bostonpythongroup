@@ -1,0 +1,162 @@
+In addition to expression operators, strings provide a set of methods that implement more sophisticated text-processing tasks.
+In Python, expressions and built-in functions may work across a range of types, but methods are generally "specific to object type".
+  string methods for strings
+
+Method: Technically, they are attributes attached to objects that happen to reference "callable functions" which always have an implied subject.
+  methods are simply functions that are associated with and act upon particular objects.
+
+1. *Attribute fetches: An expression of the form "object.attribute" means "fetch the value of attribute in object."
+2. *Call expression: An expression of the form "function(argument)" means "invoke the code of functions, passing zero or more comma-separated argument objects to it, and return function's result value." 
+
+Putting these two together allows us to call a method of an object. The method call expression:
+  object.method(arguments)
+is evaluated from left to right--Python will first fetch the method of the object and then call it, passing in both object and arguments.
+  Call method to process object with arguments.
+
+>>> S = 'spam'
+>>> result = S.find('pa')
+
+String method class in Python 3.3
+...
+s.find()
+s.replace()
+s.split()
+''.join()
+
+list()
+# String Method Examples
+To replace two characters in the middle of a string
+>>> s = 'spammy'
+>>> s = s[:3] + 'xx' + s[5:]
+>>> s
+'spaxxy'
+
+to replace a substring, you can use the string replace method instead:
+>>> s = 'spammy'
+>>> s.replace('mm', 'xx')
+'spaxxy'
+
+The general of replace method
+>>> 'aa$$bb$cc$dd'.replace('$', 'SPAM')
+'aaSPAMSPAMbbSPAMccSPAMdd'
+
+One Fixed-Size string that can occur at any offset
+>>> s = s[:where] + 'EGGS' + s[(where + 4):]
+>>> s
+'xxxxEGGSxxxxSPAMxxxx'
+
+Replace method with a third argument
+>>> s.replace('SPAM', 'EGGS')
+'xxxxEGGSxxxxEGGSxxxx'
+>>> s.replace('SPAM', 'EGGS', 1)
+'xxxxEGGSxxxxSPAMxxxx'
+
+Notice that replace returns a new string object each time because string is immutable
+
+For large string, probably it is more efficient to find a way to change the character in-place.
+*The built-in list function
+>>> s = 'spammy'
+>>> l = list(s)
+>>> l
+['s', 'p', 'a', 'm', 'm', 'y']
+
+"exploding" the characters of a string into a list.
+-assignment-
+>>> l[3] = 'x'
+>>> l[4] = 'x'
+>>> l
+['s', 'p', 'a', 'x', 'x', 'y']
+
+Use the string join method to "implode" the list back into a string:
+>>> s = ''.join(l)
+>>> s
+'spaxxy'
+
+>>> 'SPAM'.join(['eggs', 'sausage', 'ham', 'toast'])
+'eggsSPAMsausageSPAMhamSPAMtoast'
+
+delimiter and iterable
+In fact, joining substrings all at once might often run faster than concatenating them individually. 
+bytearray string an alternative to list/join combination for some kinds of 8-bit text that must be changed often.
+
+# String Method: Parsing Text
+Text parsing--that is, analyzing structure and extracting substrings.
+>>> line = 'aaa bbb ccc'
+>>> col1 = line[:3]
+>>> col2 = line[4:7]
+>>> col3 = line[8:]
+>>> col1
+'aaa'
+>>> col2
+'bbb'
+>>> col3
+'ccc'
+
+>>> line = 'aaa bbb  ccc'
+>>> cols = line.split()
+>>> cols[0]
+'aaa'
+>>> cols[1]
+'bbb'
+>>> cols[2]
+
+split() by the default checks whitespace-- the string is split at groups of one or more spaces, tabs, and newlines.
+split == parsing
+>>> line = 'bob,hacker,40'
+>>> line.split(',')
+['bob', 'hacker', '40']
+
+Delimiters can be longer than a single character
+>>> line = "i'mSPAMaSPAMlumberjack"
+>>> line.split('SPAM')
+["i'm", 'a', 'lumberjack']
+
+Comma-separated text data is part of the CSV file format
+
+# Other Common String Methods in Action
+to strip off whitespace at the end of a line of text, perform case conversions, test content, and test for a substring at the end or front.
+
+>>> line = "The knights who say NI!\n"
+>>> line.rstrip() # only at the end
+'The knights who say NI!'
+>>> line.upper()
+'THE KNIGHTS WHO SAY NI!\n'
+>>> line.isalpha() # isalnum(), isnumeric()
+False
+>>> line.endswith('NI!\n')
+True
+>>> line.startswith('The')
+True
+
+the "in" membership operator can be used to test for the presence of a substring, for instance, and length and slicing operations can be used to mimic endswith:
+
+>>> line
+'The knights who say NI!\n'
+>>> line.find("NI!") != -1
+True
+>>> 'NI!' in line
+True
+
+>>> sub = 'NI!\n'
+>>> line.endswith(sub)
+True
+>>> line[-len(sub):] == sub
+True
+
+Note that none of the string methods accepts patterns--for pattern-based text processing, you must use the Python "re" standard library module.
+
+# The Original string Module's Functions(Gone in 3.X)
+Not recommended to use
+x.method(arguments)
+string.method(x, arguments)
+string.digits
+    ascii_letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    ascii_lowercase = 'abcdefghijklmnopqrstuvwxyz'
+    ascii_uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    digits = '0123456789'
+    hexdigits = '0123456789abcdefABCDEF'
+    octdigits = '01234567'
+    printable = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTU...
+    punctuation = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
+    whitespace = ' \t\n\r\x0b\x0c'
+Template object(but use string formatting)
